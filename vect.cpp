@@ -33,6 +33,9 @@ class MyVector {
 		}
 		~MyVector() {
 			delete []m_data;
+			m_size = 0;
+                        m_capacity = 0;
+                        m_data = NULL;
 		}
 		size_t sizevc() {
 			return m_size;
