@@ -21,12 +21,8 @@ class MyVector {
 		} 
 		MyVector(size_t size, int val) {
 			m_size = size;
-			if (m_capacity == 0) {
-				m_capacity = 1;
-			} else {
-                       		m_capacity *= 2;
-                	}        
-			int* m_data = new int[m_capacity];
+			m_capacity = size * 2;			
+			m_data = new int[m_capacity];
 			for (int i = 0; i < m_size; ++i) {
 				m_data[i] = val;
 			}
