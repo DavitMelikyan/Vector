@@ -27,6 +27,49 @@ class MyVector {
 				m_data[i] = val;
 			}
 		}
+		MyVector(MyVector& other) {
+			m_size = other.m_size;
+			m_capacity = other.m_capacity;
+			m_data = new int[m_capacity];
+			for (int i = 0; i < m_size; ++i) {
+				m_data[i] = other.m_data[i];
+			}
+		}
+		MyVector& operator=(MyVector& other) {
+			if (this == &other) {
+				return *this;
+			}
+			m_size = other.m_size;
+			m_capacity = other.m_capacity;
+			delete []m_data;
+			m_data = new int[m_capacity];
+			for (int i = 0; i < m_size; ++i) {
+				m_data[i] = other.m_data[i];
+			}
+			return *this;
+		}
+		MyVector(MyVector&& other) {
+			m_size = other.m_size;
+			m_capacity = other.m_capacity;
+			m_data = other.m_data;
+			other.m_data = nullptr;
+			other.m_size = 0;
+			other.m_capacity = 0;
+		}
+		MyVector& operator=(MyVector&& other) {
+			if (this == &other) {
+                                return *this;
+                        }
+			delete [] m_data;
+			m_size = other.m_size;
+                        m_capacity = other.m_capacity;
+                        m_data = other.m_data;
+                        
+                        other.m_data = nullptr;
+                        other.m_size = 0;
+                        other.m_capacity = 0;
+			return *this;
+		}
 		~MyVector() {
 			delete []m_data;
 			m_size = 0;
@@ -102,7 +145,7 @@ int main() {
 	vec.print();
 
 	std::cout << "The size of vector is " << vec.sizevc() << std::endl;
-
+	
 	vec.popback();
 	vec.popback();
 	vec.print();
@@ -110,7 +153,11 @@ int main() {
 	vec.resize(10);
 	vec.print();
 	
-	vec.clear();
+	MyVector vec2;
+	vec2 = std::move(vec);
+	vec2.print();
+	std::cout << "The size of vector2 is " << vec2.sizevc() << std::endl;
+	std::cout << "The size of vector1 is " << vec.sizevc() << std::endl;
 	vec.print();
 
 	return 0;
