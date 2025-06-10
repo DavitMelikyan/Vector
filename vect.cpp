@@ -6,31 +6,18 @@ class MyVector {
 		size_t m_capacity;
 		int* m_data;
 	public:
-		MyVector() {
-			m_size = 0;
-			m_capacity = 0;
-			m_data = NULL;
-		}
-		MyVector(size_t size) {
-			m_capacity = size * 2;
-			m_size = size;
-			m_data = new int[m_capacity];
+		MyVector() : m_size{0}, m_capacity{0}, m_data{nullptr} {}
+		MyVector(size_t size) m_size{size}, m_capacity{size * 2}, m_data{new int[m_capacity]} {
 			for (int i = 0; i < size; ++i) {
 				m_data[i] = 0;
 			}
 		} 
-		MyVector(size_t size, int val) {
-			m_size = size;
-			m_capacity = size * 2;			
-			m_data = new int[m_capacity];
+		MyVector(size_t size, int val) : m_size{size}, m_capacity{size * 2}, m_data{new int[m_capacity]} {
 			for (int i = 0; i < m_size; ++i) {
 				m_data[i] = val;
 			}
 		}
-		MyVector(MyVector& other) {
-			m_size = other.m_size;
-			m_capacity = other.m_capacity;
-			m_data = new int[m_capacity];
+		MyVector(MyVector& other) : m_size{other.m_size}, m_capacity{other.m_capacity}, m_data{new int[m_capacity]} {
 			for (int i = 0; i < m_size; ++i) {
 				m_data[i] = other.m_data[i];
 			}
@@ -60,11 +47,9 @@ class MyVector {
 			if (this == &other) {
                                 return *this;
                         }
-			delete [] m_data;
 			m_size = other.m_size;
                         m_capacity = other.m_capacity;
                         m_data = other.m_data;
-                        
                         other.m_data = nullptr;
                         other.m_size = 0;
                         other.m_capacity = 0;
